@@ -1,0 +1,4 @@
+person:
+  name: a
+  age: 18
+  sex: true
