@@ -1,5 +1,8 @@
 package com.example.demo.modle;
 
+import org.springframework.stereotype.Component;
+
+
 public class User {
     private Integer id;
     private String name;
