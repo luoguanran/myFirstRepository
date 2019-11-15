@@ -52,6 +52,7 @@ public class AuthorizeController {
             //登录成功
             User user = new User();
             String token = UUID.randomUUID().toString();
+            user.setAvatar_url(githubUser.getAvatar_url());
             user.setToken(token);
             user.setName(githubUser.getName());
             user.setAccountId(String.valueOf(githubUser.getId()));
