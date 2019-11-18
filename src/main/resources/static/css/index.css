@@ -1,10 +1,4 @@
-.main{
-    background: url("../jpg/background.jpg") no-repeat;
-    height:100%;
-    width:100%;
-    overflow: hidden;
-    background-size:cover;
-}
+
 .row{
     background: white;
     margin: 30px;
@@ -16,6 +10,11 @@ body{
     background: url("../jpg/background.jpg") no-repeat;
     height:100%;
     width:100%;
-    overflow: hidden;
+    /*overflow: hidden;*/
     background-size:cover;
 }
+.media-object{
+    width: 38px;
+    height: 38px;
+}
+

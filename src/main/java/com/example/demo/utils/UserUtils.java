@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class UserUtils {
 
+
+
     public User getUser(HttpServletRequest request,UserMapper userMapper){
         Cookie[] cookies = request.getCookies();
         User user = null;

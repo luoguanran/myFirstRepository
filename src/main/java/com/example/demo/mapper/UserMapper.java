@@ -15,4 +15,7 @@ public interface UserMapper {
 
    @Select("SELECT * FROM gitUser WHERE token = #{token}")
    User findByToken(@Param("token") String token);
+
+   @Select("SELECT * FROM gitUser WHERE id = #{id}")
+   User findById(@Param("id") int id);
 }

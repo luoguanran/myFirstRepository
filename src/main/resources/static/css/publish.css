@@ -1,0 +1,21 @@
+.row{
+    background: white;
+    margin: 30px;
+}
+.searchBox{
+    background: white;
+}
+.main{
+    background: url("../jpg/background.jpg") no-repeat;
+    height:100%;
+    width:100%;
+    overflow: hidden;
+    background-size:cover;
+}
+body{
+    background: url("../jpg/background.jpg") no-repeat;
+    height:100%;
+    width:100%;
+    overflow: hidden;
+    background-size:cover;
+}

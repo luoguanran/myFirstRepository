@@ -7,14 +7,17 @@
     </script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/index.css">
     <script src="js/bootstrap.min.js" type="application/javascript"></script>
 </head>
 <body>
+
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">ACU</span>
             </button>
             <a class="navbar-brand" href="#">ACU</a>
@@ -33,7 +36,8 @@
                     <a href="/publish" th:text="发帖"></a>
                 </li>
                 <li class="dropdown" th:if="${session.user != null}">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${session.user.getLogin()}">我 <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false" th:text="${session.user.getLogin()}">我 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">消息中心</a></li>
                         <li><a href="#">个人资料</a></li>
@@ -47,5 +51,44 @@
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
+
+<!--<div class="jumbotron">-->
+<!--    <h1>Aim-common Union</h1>-->
+<!--    <p>志合同盟欢迎你</p>-->
+<!--    <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>-->
+<!--</div>-->
+<div class="main">
+    <div class="row">
+        <div class="col-md-9">
+            <h2><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true">帖子</span></h2>
+            <hr>
+
+            <div class="media" th:each="user_message:${messageDTOList}">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" th:src="${user_message.getUser().getAvatar_url()}" alt="...">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading" th:text="${user_message.getTitle()}">问题标题</h4>
+                    <blockquote>
+                        <p th:text="${user_message.getContent()}">问题描述</p>
+                        <footer>
+                            回复数:<span th:text="${user_message.getComment()}"></span>
+                            点击数:<span th:text="${user_message.getClicks()}"></span>
+                            时间:<span th:text="${#dates.format(user_message.getGmt_create(),'dd MMMM yyyy')}"></span>
+                        </footer>
+                    </blockquote>
+                </div>
+            </div>
+            </form>
+        </div>
+        <div class="col-md-3">
+            <h2><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true">热门话题</span></h2>
+            <hr>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
