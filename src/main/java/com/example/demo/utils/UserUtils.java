@@ -22,7 +22,6 @@ public class UserUtils {
                     String token = cookie.getValue();
                     user = userMapper.findByToken(token);
                     break;
-
                 }
             }
         }

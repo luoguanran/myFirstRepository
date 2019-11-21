@@ -18,3 +18,15 @@ body{
     height: 38px;
 }
 
+.a,.b,.c,.pageControl,.pageJump{
+    float: left;
+}
+.pageControl{
+    display: inline-block;
+}
+
+.pageJump{
+    margin-top: 25px;
+    margin-left: 10px;
+}
+
