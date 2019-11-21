@@ -31,49 +31,19 @@ public class IndexController {
     @GetMapping("/")
     public String index(HttpServletRequest request,
                         Model model,
-                        @RequestParam(name = "page",defaultValue = "1") int page
-                        ){
+                        @RequestParam(name = "page", defaultValue = "1") int page
+    ) {
         UserUtils userUtils = new UserUtils();
-        User user = userUtils.getUser(request,userMapper);
-        if(user != null)
-            request.getSession().setAttribute("user",user);
+        User user = userUtils.getUser(request, userMapper);
+        if (user != null)
+            request.getSession().setAttribute("user", user);
 
         MessageService messageService = new MessageService();
-        List<MessageDTO> messageDTOList = messageService.get(messageMapper,userMapper);
-        List<Message_PageDTO> messageDTOList1 = messageService.getByPage(messageMapper,userMapper,page);
 
-        model.addAttribute("messageDTOList",messageDTOList);
-        model.addAttribute("messageDTOList1",messageDTOList1);
+        List<Message_PageDTO> messageDTOList = messageService.getByPage(messageMapper, userMapper, page);
+        model.addAttribute("messageDTOList", messageDTOList);
         model.addAttribute("page",page);
-        int myPage = 1;
-        if(request.getParameter("myPage") != null)
-            myPage = Integer.parseInt(request.getParameter("myPage"));
-        model.addAttribute("myPage",myPage);
-        return "index";
-    }
-
-    @RequestMapping("/toMyPage")
-    public String toMyPage(HttpServletRequest request,
-                        Model model,
-                        @RequestParam(name = "myPage",defaultValue = "1") int myPage
-    ){
-        if(request.getParameter("myPage") != null)
-            myPage = Integer.parseInt(request.getParameter("myPage"));
-        model.addAttribute("myPage",myPage);
-
-        UserUtils userUtils = new UserUtils();
-        User user = userUtils.getUser(request,userMapper);
-        if(user != null)
-            request.getSession().setAttribute("user",user);
-
-        MessageService messageService = new MessageService();
-        List<MessageDTO> messageDTOList = messageService.get(messageMapper,userMapper);
-        List<Message_PageDTO> messageDTOList1 = messageService.getByPage(messageMapper,userMapper,myPage);
-
-        model.addAttribute("messageDTOList",messageDTOList);
-        model.addAttribute("messageDTOList1",messageDTOList1);
-        model.addAttribute("page",myPage);
-
         return "index";
     }
 }
+

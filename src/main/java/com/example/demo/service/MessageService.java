@@ -55,4 +55,24 @@ public class MessageService {
 
         return messageDTOList;
     }
+    public List<Message_PageDTO> getByUser(MessageMapper messageMapper, UserMapper userMapper,int page,int user_id) {
+        int firstMessage = (page - 1) * 5;
+        List<Message_PageDTO> messageDTOList = new ArrayList<>();
+        //获取当前页的message
+        List<Message> messageList = messageMapper.getMessageListByUser(firstMessage,user_id);
+        //获取总页数
+        int totalMessage = messageMapper.totalMessageOfUser(user_id) ;
+        int totalPage = totalMessage % 5 == 0 ? totalMessage / 5 : totalMessage / 5 + 1;
+        //遍历message中的属性user_id,根据user_id获取发帖者
+        for (Message message : messageList) {
+            User user = userMapper.findById(message.getUser_id());
+            Message_PageDTO message_pageDTO = new Message_PageDTO();
+            BeanUtils.copyProperties(message, message_pageDTO);
+            message_pageDTO.setUser(user);
+            message_pageDTO.setTotal_page(totalPage);
+            messageDTOList.add(message_pageDTO);
+        }
+
+        return messageDTOList;
+    }
 }

@@ -2,13 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>profile</title>
+    <title th:text="${sectionName}">profile</title>
     <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js">
     </script>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="css/index.css">
-    <script src="js/bootstrap.min.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
 </head>
 <body>
 <div th:insert="navigation::nav"></div>
@@ -18,19 +18,19 @@
             <h2><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true">热门话题</span></h2>
             <hr>
             <div class="list-group">
-                <a href="#" class="list-group-item active">
-                    Cras justo odio
+                <a href="/profile/question" th:class="${section == 'question'}?'active list-group-item':'list-group-item'">我的帖子</a>
+                <a href="/profile/replies" th:class="${section == 'replies'}?'active list-group-item':'list-group-item'">我的回复</a>
+                <a href="/profile/mentions" th:class="${section == 'mentions'}?'active list-group-item':'list-group-item'">
+                    提及我的
+                    <span class="badge">10</span>
                 </a>
-                <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-                <a href="#" class="list-group-item">Morbi leo risus</a>
-                <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-                <a href="#" class="list-group-item">Vestibulum at eros</a>
+                <a href="/profile/letters" th:class="${section == 'letters'}?'active list-group-item':'list-group-item'">私信</a>
             </div>
         </div>
         <div class="col-md-9">
             <h2><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true">帖子</span></h2>
             <hr>
-            <div class="media" th:each="user_message:${messageDTOList1}">
+            <div class="media" th:each="user_message:${messageDTOList}">
                 <div class="media-left">
                     <a href="#">
                         <img class="media-object" th:src="${user_message.getUser().getAvatar_url()}" alt="...">
@@ -51,38 +51,35 @@
             <div class="pageControl">
                 <nav aria-label="Page navigation">
 
-                    <ul th:if="${ messageDTOList1[0].getTotal_page() } == ${ page }" class="pagination">
-                        <li><a th:href="@{/(page=1)}">首页</a></li>
-                        <li><a th:href="@{/(page=${ page - 1})}">上一页</a></li>
+                    <ul th:if="${ messageDTOList[0].getTotal_page() } == ${ page } and ${messageDTOList[0].getTotal_page() != 1}" class="pagination">
+                        <li><a th:href="@{'/profile/'+${section}(page=1)}">首页</a></li>
+                        <li><a th:href="@{'/profile/'+${section}(page=${ page - 1})}">上一页</a></li>
                     </ul>
 
 
-                    <ul th:if="${ page } == 1" class="pagination">
-                        <li><a th:href="@{/(page=${ messageDTOList1[0].getTotal_page()})}">尾页</a></li>
-                        <li><a th:href="@{/(page=${ page + 1})}">下一页</a></li>
+                    <ul th:if="${ page } == 1 and ${messageDTOList[0].getTotal_page() != 1}" class="pagination">
+                        <li><a th:href="@{'/profile/'+${section}(page=${ page + 1})}">下一页</a></li>
+                        <li><a th:href="@{'/profile/'+${section}(page=${ messageDTOList[0].getTotal_page()})}">尾页</a></li>
+
                     </ul>
 
-                    <ul th:if="${ page } > 1 and ${ page } < ${messageDTOList1[0].getTotal_page()}" class="pagination">
-                        <li><a th:href="@{/(page=1)}">首页</a></li>
-                        <li><a th:href="@{/(page=${ page - 1})}">上一页</a></li>
-                        <li><a th:href="@{/(page=${ page + 1})}">下一页</a></li>
-                        <li><a th:href="@{/(page=${ messageDTOList1[0].getTotal_page()})}">尾页</a></li>
+                    <ul th:if="${ page } > 1 and ${ page } < ${messageDTOList[0].getTotal_page()}" class="pagination">
+                        <li><a th:href="@{'/profile/'+${section}(page=1)}">首页</a></li>
+                        <li><a th:href="@{'/profile/'+${section}(page=${ page - 1})}">上一页</a></li>
+                        <li><a th:href="@{'/profile/'+${section}(page=${ page + 1})}">下一页</a></li>
+                        <li><a th:href="@{'/profile/'+${section}(page=${ messageDTOList[0].getTotal_page()})}">尾页</a></li>
+                    </ul>
+
+                    <ul class="pagination">
+                        <li><a th:text="${page}+'/'+${messageDTOList[0].getTotal_page()}+页"></a></li>
                     </ul>
 
                 </nav>
             </div>
 
-            <div class="pageJump">
-                <form th:action="@{/toMyPage(myPage=${myPage})}" >
-                    <div class="a" style="width: 30px;height: 60px">
-                        <input type="text" name="myPage" style="width:30px;height: 20px" th:value="${page}">
-                    </div>
-                    <div class="b" th:text="'/'+${messageDTOList1[0].getTotal_page()}+页"></div>
-                    <div class="c">
-                        <input type="submit" class="btn-success" th:value="跳转">
-                    </div>
 
-                </form>
+
+
             </div>
         </div>
     </div>

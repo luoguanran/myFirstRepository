@@ -17,7 +17,7 @@
         <div class="col-md-9">
             <h2><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true">帖子</span></h2>
             <hr>
-            <div class="media" th:each="user_message:${messageDTOList1}">
+            <div class="media" th:each="user_message:${messageDTOList}">
                 <div class="media-left">
                     <a href="#">
                         <img class="media-object" th:src="${user_message.getUser().getAvatar_url()}" alt="...">
@@ -38,33 +38,34 @@
             <div class="pageControl">
                 <nav aria-label="Page navigation">
 
-                    <ul th:if="${ messageDTOList1[0].getTotal_page() } == ${ page }" class="pagination">
+                    <ul th:if="${ messageDTOList[0].getTotal_page() } == ${ page }" class="pagination">
                         <li><a th:href="@{/(page=1)}">首页</a></li>
                         <li><a th:href="@{/(page=${ page - 1})}">上一页</a></li>
                     </ul>
 
 
                     <ul th:if="${ page } == 1" class="pagination">
-                        <li><a th:href="@{/(page=${ messageDTOList1[0].getTotal_page()})}">尾页</a></li>
                         <li><a th:href="@{/(page=${ page + 1})}">下一页</a></li>
+                        <li><a th:href="@{/(page=${ messageDTOList [0].getTotal_page()})}">尾页</a></li>
+
                     </ul>
 
-                    <ul th:if="${ page } > 1 and ${ page } < ${messageDTOList1[0].getTotal_page()}" class="pagination">
+                    <ul th:if="${ page } > 1 and ${ page } < ${messageDTOList [0].getTotal_page()}" class="pagination">
                         <li><a th:href="@{/(page=1)}">首页</a></li>
                         <li><a th:href="@{/(page=${ page - 1})}">上一页</a></li>
                         <li><a th:href="@{/(page=${ page + 1})}">下一页</a></li>
-                        <li><a th:href="@{/(page=${ messageDTOList1[0].getTotal_page()})}">尾页</a></li>
+                        <li><a th:href="@{/(page=${ messageDTOList[0].getTotal_page()})}">尾页</a></li>
                     </ul>
 
                 </nav>
             </div>
 
             <div class="pageJump">
-                <form th:action="@{/toMyPage(myPage=${myPage})}" >
+                <form th:action="@{/(page=${page})}" >
                     <div class="a" style="width: 30px;height: 60px">
                     <input type="text" name="myPage" style="width:30px;height: 20px" th:value="${page}">
                     </div>
-                    <div class="b" th:text="'/'+${messageDTOList1[0].getTotal_page()}+页"></div>
+                    <div class="b" th:text="'/'+${messageDTOList[0].getTotal_page()}+页"></div>
                     <div class="c">
                     <input type="submit" class="btn-success" th:value="跳转">
                     </div>

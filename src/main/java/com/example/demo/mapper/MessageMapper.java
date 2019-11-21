@@ -29,4 +29,11 @@ public interface MessageMapper {
     @Select("SELECT COUNT(1) FROM message")
     int totalMessage();
 
+    @Select("SELECT * FROM message WHERE user_id=#{user_id} ORDER BY gmt_create LIMIT #{firstMessage},5")
+    List<Message> getMessageListByUser(@Param("firstMessage") int firstMessage,
+                                       @Param("user_id") int user_id
+                                       );
+    @Select("SELECT COUNT(1) FROM message WHERE user_id=#{user_id}")
+    int totalMessageOfUser(@Param("user_id") int user_id);
+
 }
