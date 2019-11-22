@@ -18,44 +18,45 @@ import java.util.List;
 
 @Controller
 public class ProfileController {
+
     @Autowired
-    private MessageMapper messageMapper;
-    @Autowired
-    private UserMapper userMapper;
+    private MessageService messageService;
 
+    @RequestMapping("/profile/{action}")
+    public String profile(HttpServletRequest request,
+                          Model model,
+                          @RequestParam(name = "page", defaultValue = "1") int page,
+                          @PathVariable(name = "action") String action) {
 
-        @RequestMapping("/profile/{action}")
-        public String profile(HttpServletRequest request,
-                              Model model,
-                              @RequestParam(name = "page", defaultValue = "1") int page,
-                              @PathVariable(name = "action") String action){
-
-            if(action.equals("question")){
-                model.addAttribute("section","question");
-                model.addAttribute("sectionName","我的帖子");
-            }else if(action.equals("replies")){
-                model.addAttribute("section","replies");
-                model.addAttribute("sectionName","我的回复");
-            }else if(action.equals("mentions")){
-                model.addAttribute("section","mentions");
-                model.addAttribute("sectionName","提及我的");
-            }else if(action.equals("letters")){
-                model.addAttribute("section","letters");
-                model.addAttribute("sectionName","私信");
-            }
-
-            UserUtils userUtils = new UserUtils();
-            User user = userUtils.getUser(request, userMapper);
-            if (user != null)
-                request.getSession().setAttribute("user", user);
-
-            MessageService messageService = new MessageService();
-            int user_id = user.getId();
-            List<Message_PageDTO> messageDTOList = messageService.getByUser(messageMapper, userMapper, page,user_id);
-            model.addAttribute("messageDTOList", messageDTOList);
-            model.addAttribute("page", page);
-
-            return "profile" ;
+        if (action.equals("question")) {
+            model.addAttribute("section", "question");
+            model.addAttribute("sectionName", "我的帖子");
+        } else if (action.equals("replies")) {
+            model.addAttribute("section", "replies");
+            model.addAttribute("sectionName", "我的回复");
+        } else if (action.equals("mentions")) {
+            model.addAttribute("section", "mentions");
+            model.addAttribute("sectionName", "提及我的");
+        } else if (action.equals("letters")) {
+            model.addAttribute("section", "letters");
+            model.addAttribute("sectionName", "私信");
         }
+
+
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null)
+            return "redirect:/";
+
+        int user_id = user.getId();
+        List<Message_PageDTO> messageDTOList = messageService.getByUser(page, user_id);
+        if (messageDTOList.size() != 0) {
+            model.addAttribute("totalPage", messageDTOList.get(0).getTotal_page());
+            model.addAttribute("messageDTOList", messageDTOList);
+        } else
+            model.addAttribute("totalPage", 1);
+        model.addAttribute("page", page);
+
+        return "profile";
+    }
 
 }

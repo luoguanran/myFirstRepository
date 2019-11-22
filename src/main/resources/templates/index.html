@@ -46,7 +46,7 @@
 
                     <ul th:if="${ page } == 1" class="pagination">
                         <li><a th:href="@{/(page=${ page + 1})}">下一页</a></li>
-                        <li><a th:href="@{/(page=${ messageDTOList [0].getTotal_page()})}">尾页</a></li>
+                        <li><a th:href="@{/(page=${ messageDTOList[0].getTotal_page()})}">尾页</a></li>
 
                     </ul>
 
@@ -63,7 +63,7 @@
             <div class="pageJump">
                 <form th:action="@{/(page=${page})}" >
                     <div class="a" style="width: 30px;height: 60px">
-                    <input type="text" name="myPage" style="width:30px;height: 20px" th:value="${page}">
+                    <input type="text" name="page" style="width:30px;height: 20px" th:value="${page}">
                     </div>
                     <div class="b" th:text="'/'+${messageDTOList[0].getTotal_page()}+页"></div>
                     <div class="c">

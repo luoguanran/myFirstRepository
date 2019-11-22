@@ -21,11 +21,8 @@ public class PublishController {
     @Autowired
     private MessageMapper messageMapper;
 
-    @Autowired
-    private UserMapper userMapper;
-
     @GetMapping("/publish")
-    public String publish(){
+    public String publish() {
         return "publish";
     }
 
@@ -35,11 +32,9 @@ public class PublishController {
             @RequestParam("content") String content,
             HttpServletRequest request,
             Model model
-    ){
-        User user = new UserUtils().getUser(request,userMapper);
-        if(user != null)
-            request.getSession().setAttribute("user",user);
-        else {
+    ) {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
             model.addAttribute("error", "用户未登录");
             return "publish";
         }

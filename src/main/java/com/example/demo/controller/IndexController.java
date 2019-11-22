@@ -24,25 +24,17 @@ import java.util.List;
 public class IndexController {
 
     @Autowired
-    private MessageMapper messageMapper;
-    @Autowired
-    private UserMapper userMapper;
+    private MessageService messageService;
 
     @GetMapping("/")
     public String index(HttpServletRequest request,
                         Model model,
                         @RequestParam(name = "page", defaultValue = "1") int page
     ) {
-        UserUtils userUtils = new UserUtils();
-        User user = userUtils.getUser(request, userMapper);
-        if (user != null)
-            request.getSession().setAttribute("user", user);
 
-        MessageService messageService = new MessageService();
-
-        List<Message_PageDTO> messageDTOList = messageService.getByPage(messageMapper, userMapper, page);
+        List<Message_PageDTO> messageDTOList = messageService.getByPage(page);
         model.addAttribute("messageDTOList", messageDTOList);
-        model.addAttribute("page",page);
+        model.addAttribute("page", page);
         return "index";
     }
 }

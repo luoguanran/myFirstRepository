@@ -30,7 +30,7 @@
         <div class="col-md-9">
             <h2><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true">帖子</span></h2>
             <hr>
-            <div class="media" th:each="user_message:${messageDTOList}">
+            <div class="media" th:if="${messageDTOList}!=null" th:each="user_message:${messageDTOList}">
                 <div class="media-left">
                     <a href="#">
                         <img class="media-object" th:src="${user_message.getUser().getAvatar_url()}" alt="...">
@@ -48,37 +48,33 @@
                     </blockquote>
                 </div>
             </div>
-            <div class="pageControl">
-                <nav aria-label="Page navigation">
-
-                    <ul th:if="${ messageDTOList[0].getTotal_page() } == ${ page } and ${messageDTOList[0].getTotal_page() != 1}" class="pagination">
+            <div class="pageControl" th:if="${messageDTOList}!=null">
+                <nav aria-label="Page navigation" >
+                    <ul th:if="${ totalPage } == ${ page } and ${totalPage != 1}" class="pagination">
                         <li><a th:href="@{'/profile/'+${section}(page=1)}">首页</a></li>
                         <li><a th:href="@{'/profile/'+${section}(page=${ page - 1})}">上一页</a></li>
                     </ul>
 
 
-                    <ul th:if="${ page } == 1 and ${messageDTOList[0].getTotal_page() != 1}" class="pagination">
+                    <ul th:if="${ page } == 1 and ${totalPage != 1}" class="pagination">
                         <li><a th:href="@{'/profile/'+${section}(page=${ page + 1})}">下一页</a></li>
-                        <li><a th:href="@{'/profile/'+${section}(page=${ messageDTOList[0].getTotal_page()})}">尾页</a></li>
+                        <li><a th:href="@{'/profile/'+${section}(page=${ totalPage})}">尾页</a></li>
 
                     </ul>
 
-                    <ul th:if="${ page } > 1 and ${ page } < ${messageDTOList[0].getTotal_page()}" class="pagination">
+                    <ul th:if="${ page } > 1 and ${ page } < ${totalPage}" class="pagination">
                         <li><a th:href="@{'/profile/'+${section}(page=1)}">首页</a></li>
                         <li><a th:href="@{'/profile/'+${section}(page=${ page - 1})}">上一页</a></li>
                         <li><a th:href="@{'/profile/'+${section}(page=${ page + 1})}">下一页</a></li>
-                        <li><a th:href="@{'/profile/'+${section}(page=${ messageDTOList[0].getTotal_page()})}">尾页</a></li>
+                        <li><a th:href="@{'/profile/'+${section}(page=${ totalPage})}">尾页</a></li>
                     </ul>
 
                     <ul class="pagination">
-                        <li><a th:text="${page}+'/'+${messageDTOList[0].getTotal_page()}+页"></a></li>
+                        <li><a th:text="${page}+'/'+${totalPage}+页"></a></li>
                     </ul>
 
                 </nav>
             </div>
-
-
-
 
             </div>
         </div>
