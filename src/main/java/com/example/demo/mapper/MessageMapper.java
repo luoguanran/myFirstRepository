@@ -36,4 +36,7 @@ public interface MessageMapper {
     @Select("SELECT COUNT(1) FROM message WHERE user_id=#{user_id}")
     int totalMessageOfUser(@Param("user_id") int user_id);
 
+    @Select("SELECT * FROM message WHERE id=#{id}")
+    Message findMessageById(@Param("id") int id);
+
 }

@@ -62,4 +62,13 @@ public class MessageService {
 
         return messageDTOList;
     }
+
+    public MessageDTO getById(int id){
+        Message message = messageMapper.findMessageById(id);
+        User user = userMapper.findById(message.getUser_id());
+        MessageDTO messageDTO = new MessageDTO();
+        BeanUtils.copyProperties(message,messageDTO);
+        messageDTO.setUser(user);
+        return messageDTO;
+    }
 }

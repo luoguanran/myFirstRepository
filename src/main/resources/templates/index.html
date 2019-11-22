@@ -24,7 +24,9 @@
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" th:text="${user_message.getTitle()}">问题标题</h4>
+                    <a th:href="@{/question(question_id=${user_message.getId()})}">
+                    <h4 class="media-heading" th:text="${user_message.getTitle()}" >问题标题</h4>
+                    </a>
                     <blockquote>
                         <p th:text="${user_message.getContent()}">问题描述</p>
                         <footer>

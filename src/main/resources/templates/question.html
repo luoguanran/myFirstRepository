@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js">
+    </script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/question.css">
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body>
+<div th:insert="navigation::nav"></div>
+<div class="main" >
+    <div class="row">
+        <div class="col-md-9">
+            <div class="media">
+                <div class="media-left media-middle">
+                    <a href="#">
+                        <img class="media-object" th:src="${message.getUser().getAvatar_url()}" alt="...">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 th:text="${message.getUser().getLogin()}">Middle aligned media</h4>
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title" th:text="${message.getTitle()}">Panel title</h3>
+                </div>
+                <div class="panel-body" th:text="${message.getContent()}">
+                    Panel content
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <h2><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true">热门话题</span></h2>
+            <hr>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
